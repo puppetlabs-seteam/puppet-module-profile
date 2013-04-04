@@ -1,0 +1,8 @@
+name    'seteam-profile'
+version '0.0.1'
+source 'https://github.com/puppetlabs-seteam/puppet-module-profile.git'
+author 'Puppet Labs SE Team'
+license 'Apache 2.0'
+summary 'Puppet Labs SE Team Profile Module'
+description 'Top-level profile-aggregator module to defining SE-Team-specific profiles'
+project_page 'https://github.com/puppetlabs-seteam/puppet-module-profile'
