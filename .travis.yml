@@ -1,15 +1,15 @@
 --- 
 language: ruby
+script: 
+- git clone -q git://github.com/puppetlabs/ghpublisher.git .forge-releng
+- .forge-releng/publish
 env: 
   global: 
   - PUBLISHER_LOGIN=seteam
   - secure: |-
-      sAsO5q3khbk3/kHNixmwEWif5sd4DM5/BAEO2CwhUP812Kkh9iWqb+ksfE5D
-      Ce++PEPrKnWDDwjmcH1xa82uCo+5zfmNZQfsR65N03zeIBNvvbsHP94rnN6a
-      zaIA5kE8DeO8DCSQa2nYvLSx0R/UX9SIl3zq7MA7CoG5C6e4swo=
-script: 
-- git clone -q git://github.com/puppetlabs/ghpublisher.git .forge-releng
-- .forge-releng/publish
+      Rar+QrvDtfLuIWdj3oa4DNoIltgZ/Qo0MH3eeTKxUKvSNWGG4vefcxZrpdOh
+      qz8xLAlUOKa021Cmk0MgkW4Hkvu54O4N/kquD6+JOd+VlviYJGQky+NQL+2T
+      akXqZBZthsOqz5bhqc9cA44XeajUf3hasB59W+uI0Df/kVTkePw=
 branches: 
   only: 
   - master
