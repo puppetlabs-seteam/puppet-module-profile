@@ -16,4 +16,7 @@ class profile::tomcat {
     version => $version,
   }
 
+  include tomcat::app::docs
+  include tomcat::app::admin
+
 }
