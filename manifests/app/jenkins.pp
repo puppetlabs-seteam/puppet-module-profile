@@ -24,7 +24,7 @@ class profile::app::jenkins {
   }
 
   # This directory is used by the Jenkins app, and should exist
-  file { "${tomcat::params::tomcat_home}/.jenkins":
+  file { "${tomcat::params::user_homedir}/.jenkins":
     ensure => directory,
     owner  => $tomcat::params::user,
     group  => $tomcat::params::group,
