@@ -1,22 +1,11 @@
-class profile::app::jenkins {
+class profile::app::jenkins (
+  $version = 'latest',
+  $ensure  = undef,
+  $package = undef,
+) {
   include profile::tomcat
   include profile::staging
 
-  # Allow specification of a Jenkins application package name and version
-  # based on a global variable (e.g. parameter passed in from the ENC). Also
-  # allow specified ensure.
-  $package = $::profile_app_jenkins_package ? {
-    default => $::profile_app_jenkins_package,
-    undef   => undef,
-  }
-  $ensure = $::profile_app_jenkins_ensure ? {
-    default => $::profile_app_jenkins_ensure,
-    undef   => undef,
-  }
-  $version = $::profile_app_jenkins_version ? {
-    default => $::profile_app_jenkins_version,
-    undef   => 'latest',
-  }
   $version_string = $version ? {
     undef    => '-unspecified',
     'latest' => '-unspecified',

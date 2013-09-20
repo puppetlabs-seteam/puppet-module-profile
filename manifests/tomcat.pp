@@ -1,15 +1,8 @@
-class profile::tomcat {
-
-  # Allow specification of a tomcat application server package name and version
-  # based on a global variable (e.g. parameter passed in from the ENC)
-  $package = $::profile_tomcat_package ? {
-    default => $::profile_tomcat_package,
-    undef   => undef,
-  }
-  $version = $::profile_tomcat_version ? {
-    default => $::profile_tomcat_version,
-    undef   => undef,
-  }
+class profile::tomcat (
+  $package = undef,
+  $version = undef,
+) {
+  include profile::firewall
 
   class { '::tomcat':
     package => $package,
@@ -18,5 +11,11 @@ class profile::tomcat {
 
   include tomcat::app::docs
   include tomcat::app::admin
+
+  firewall { '100 allow connections to tomcat':
+    proto   => 'tcp',
+    dport   => '8080',
+    action  => 'accept',
+  }
 
 }
