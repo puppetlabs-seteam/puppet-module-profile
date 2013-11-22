@@ -15,9 +15,14 @@ class profile::splunk (
     purge_outputs => $purge_outputs,
   }
 
-  firewall { '100 allow connections to splunk':
+  firewall { '100 allow connections to splunk web service':
     proto   => 'tcp',
     dport   => $web_port,
+    action  => 'accept',
+  }
+  firewall { '100 allow connections to splunk logging service':
+    proto   => 'tcp',
+    dport   => $logging_port,
     action  => 'accept',
   }
 
