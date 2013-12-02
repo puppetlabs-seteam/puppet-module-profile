@@ -17,12 +17,19 @@
 class profile::firewall {
   include stdlib::stages
 
-  class { '::firewall':                stage => 'setup'  }
-  class { '::profile::firewall::pre':  stage => 'setup'  }
-  class { '::profile::firewall::post': stage => 'deploy' }
+  case $::osfamily {
+    'windows', 'Solaris': {
+      warning("osfamily ${::osfamily} not supported by profile::firewall")
+    }
+    default: {
+      class { '::firewall':                stage => 'setup'  }
+      class { '::profile::firewall::pre':  stage => 'setup'  }
+      class { '::profile::firewall::post': stage => 'deploy' }
 
-  resources { "firewall":
-    purge => true,
+      resources { 'firewall':
+        purge => true,
+      }
+    }
   }
 
 }
