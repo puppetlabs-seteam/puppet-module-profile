@@ -1,4 +1,5 @@
 class profile::splunk::forwarder (
+  $server,
   $splunkd_port  = '8089',
   $logging_port  = '9997',
   $purge_inputs  = false,
@@ -7,6 +8,7 @@ class profile::splunk::forwarder (
   include profile::firewall
 
   class { '::splunk::forwarder':
+    server        => $server,
     logging_port  => $logging_port,
     splunkd_port  => $splunkd_port,
     purge_inputs  => $purge_inputs,
