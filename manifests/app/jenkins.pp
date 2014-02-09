@@ -16,5 +16,6 @@ class profile::app::jenkins(
   
   tomcat::war { 'jenkins':
     filename => $jenkins_war_file,
+    require  => Class['tomcat'],
   }
 }

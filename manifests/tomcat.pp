@@ -5,6 +5,7 @@ class profile::tomcat (
 
   class { '::tomcat':
     tomcat_version => $tomcat_version,
+    require        => Class['::staging'],
   }
 
   firewall { '100 allow connections to tomcat':

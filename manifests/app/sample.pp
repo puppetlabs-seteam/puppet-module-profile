@@ -9,5 +9,6 @@ class profile::app::sample(
 
   tomcat::war { 'sample':
     filename => $sample_war_file,
+    require  => Class['tomcat'],
   }
 }
