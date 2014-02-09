@@ -1,16 +1,11 @@
 class profile::tomcat (
-  $package = undef,
-  $version = undef,
+  $tomcat_version = '6.0.35',
 ) {
   include profile::firewall
 
   class { '::tomcat':
-    package => $package,
-    version => $version,
+    tomcat_version => $tomcat_version,
   }
-
-  include tomcat::app::docs
-  include tomcat::app::admin
 
   firewall { '100 allow connections to tomcat':
     proto   => 'tcp',

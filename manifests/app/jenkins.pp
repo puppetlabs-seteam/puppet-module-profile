@@ -1,31 +1,20 @@
-class profile::app::jenkins (
-  $version = 'latest',
-  $ensure  = undef,
-  $package = undef,
+# Class: tomcat::jenkins
+#
+#   This class models the Jenkins Continuous Integration
+#   service in Puppet.
+#
+class profile::app::jenkins(
+  $jenkins_version = '1.400',
 ) {
-  include profile::tomcat
-  include profile::staging
+  $jenkins_war_file = "jenkins-${jenkins_version}.war"
+  $jenkins_packages = ['fontconfig', 'dejavu-sans-fonts']
 
-  $version_string = $version ? {
-    undef    => '-unspecified',
-    'latest' => '-unspecified',
-    default  => "-${version}",
-  }
-
-  # This directory is used by the Jenkins app, and should exist
-  file { "${tomcat::params::user_homedir}/.jenkins":
-    ensure => directory,
-    owner  => $tomcat::params::user,
-    group  => $tomcat::params::group,
-    mode   => '0750',
+  package{ $jenkins_packages:
+    ensure => installed,
     before => Tomcat::War['jenkins'],
   }
-
-  # The Jenkins app should be deployed
+  
   tomcat::war { 'jenkins':
-    ensure  => $ensure,
-    warfile => "jenkins${version_string}.war",
-    source  => "http://mirrors.jenkins-ci.org/war/${version}/jenkins.war",
+    filename => $jenkins_war_file,
   }
-
 }
