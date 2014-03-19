@@ -1,8 +1,9 @@
 class profile::firewall::pre {
 
-  # Remove resource dependency defaults
+  # Override resource dependency defaults
   Firewall {
     require => undef,
+    notify  => Service['iptables'],
   }
 
   # Default firewall rules
