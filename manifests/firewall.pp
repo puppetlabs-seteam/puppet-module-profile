@@ -1,27 +1,14 @@
-# To use this profile, include something like the following in your site.pp
-#
-# case $::osfamily {
-#   'RedHat', 'Debian': {
-#     include profile::firewall
-#     Firewall {
-#       require => Class['profile::firewall::pre'],
-#       before  => Class['profile::firewall::post'],
-#     }
-#   }
-# }
-#
-# You will then be able to declare firewall rules in other classes and be
-# assured proper order configuration of the firewall without ever
-# accidentally cutting off connectivity (even temporarily).
-#
+# Include a default set of pre and post firewall rules. This class is
+# implemented using stages in order to ensure that you will be able to declare
+# firewall rules in other classes and be assured proper order configuration of
+# the firewall without ever accidentally cutting off connectivity (even
+# temporarily).
 class profile::firewall {
   include stdlib::stages
 
   case $::osfamily {
-    'windows', 'Solaris': {
-      warning("osfamily ${::osfamily} not supported by profile::firewall")
-    }
     default: {
+
       class { '::firewall':                stage => 'setup'  }
       class { '::profile::firewall::pre':  stage => 'setup'  }
       class { '::profile::firewall::post': stage => 'deploy' }
@@ -29,6 +16,10 @@ class profile::firewall {
       resources { 'firewall':
         purge => true,
       }
+
+    }
+    'windows', 'Solaris': {
+      warning("osfamily ${::osfamily} not supported by profile::firewall")
     }
   }
 
