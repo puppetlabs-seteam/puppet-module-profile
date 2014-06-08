@@ -3,12 +3,15 @@
 #   This class installs the sample war in tomcat
 #
 class profile::app::sample(
-  $sample_version = '1.0',
+  $version = '1.0',
+  $ensure = undef,
 ) {
-  $sample_war_file = "sample-${sample_version}.war"
+  include profile::tomcat
+  include profile::staging
 
   tomcat::war { 'sample':
-    filename => $sample_war_file,
-    require  => Class['tomcat'],
+    ensure  => $ensure,
+    warfile => "sample-${version}.war",
+    source  => "http://master/tomcat/sample-${version}.war",
   }
 }
