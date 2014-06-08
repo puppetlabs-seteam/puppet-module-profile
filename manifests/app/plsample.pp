@@ -2,16 +2,16 @@
 #
 #   This class installs the sample war in tomcat
 #
-class profile::app::sample(
+class profile::app::plsample(
   $version = '1.0',
   $ensure = undef,
 ) {
   include profile::tomcat
   include profile::staging
 
-  tomcat::war { 'sample':
+  tomcat::war { 'plsample':
     ensure  => $ensure,
-    warfile => "sample-${version}.war",
-    source  => "http://master/tomcat/sample-${version}.war",
+    warfile => "plsample-${version}.war",
+    source  => "http://master/tomcat/plsample-${version}.war",
   }
 }
