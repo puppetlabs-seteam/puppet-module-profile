@@ -1,0 +1,11 @@
+{
+  "name": "centos-for-large",
+  "repo": "centos-6.5",
+  "task": "centos",
+  "broker": "puppet-pe",
+  "enabled": true,
+  "hostname": "host${id}.example.com",
+  "root_password": "puppetlabs",
+  "max_count": 20,
+  "tags": ["large"]
+}

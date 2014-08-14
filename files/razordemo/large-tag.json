@@ -1,0 +1,4 @@
+{
+  "name": "large",
+  "rule": [">", ["num", ["fact", "processorcount"]], 4]
+}
