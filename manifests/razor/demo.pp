@@ -47,24 +47,26 @@ class puppet-module-profile::razor::demo {
     exec { 'Install Small Tag':
       path => "/usr/bin",
       command => "razor create-tag --json /tmp/small-tag.json",
+      onlyif => "razor tags test small",
       require => File["/tmp/small-tag.json"],
     } ->
 
     exec { 'Install Large Tag':
       path => "/usr/bin",
       command => "razor create-tag --json /tmp/large-tag.json",
+      onlyif => "razor tags test large",
       require => File["/tmp/large-tag.json"],
     } ->
 
     exec { 'Install Small Policy':
       path => "/usr/bin",
-      command => "razor create-repo --json /tmp/policy-small.json",
+      command => "razor create-policy --json /tmp/policy-small.json",
       require => File["/tmp/policy-small.json"],
     } ->
 
     exec { 'Install Large Policy':
       path => "/usr/bin",
-      command => "razor create-repo --json /tmp/policy-large.json",
+      command => "razor create-policy --json /tmp/policy-large.json",
       require => File["/tmp/policy-large.json"],
     } ->
 
