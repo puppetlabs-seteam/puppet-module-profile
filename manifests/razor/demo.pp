@@ -47,14 +47,14 @@ class puppet-module-profile::razor::demo {
     exec { 'Install Small Tag':
       path => "/usr/bin",
       command => "razor create-tag --json /tmp/small-tag.json",
-      onlyif => "razor tags test small",
+      unless => "razor tags test small",
       require => File["/tmp/small-tag.json"],
     } ->
 
     exec { 'Install Large Tag':
       path => "/usr/bin",
       command => "razor create-tag --json /tmp/large-tag.json",
-      onlyif => "razor tags test large",
+      unless => "razor tags test large",
       require => File["/tmp/large-tag.json"],
     } ->
 
