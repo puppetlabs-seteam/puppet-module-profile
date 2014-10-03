@@ -1,5 +1,5 @@
 name    'seteam-profile'
-version '0.2.4'
+version '0.3.0'
 source 'https://github.com/puppetlabs-seteam/puppet-module-profile.git'
 author 'Puppet Labs SE Team'
 license 'Apache 2.0'
