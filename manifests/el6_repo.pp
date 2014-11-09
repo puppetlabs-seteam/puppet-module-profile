@@ -1,6 +1,4 @@
-class profile::el6_repo (
-  $repohostname = 'master',
-) {
+class profile::el6_repo {
   yumrepo { 'base':
     descr      => 'CentOS-$releasever - Base',
     gpgcheck   => '1',
@@ -23,7 +21,7 @@ class profile::el6_repo (
     mirrorlist => 'http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates',
   }
   yumrepo { 'se-repo':
-    baseurl  => 'http://master/rpms',
+    baseurl  => "http://${::servername}/rpms",
     descr    => 'SE Cached Files',
     enabled  => 1,
     gpgcheck => 1,
