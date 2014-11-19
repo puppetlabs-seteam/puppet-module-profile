@@ -1,4 +1,4 @@
-class seteam::pe_env {
+class profile::pe_env {
 
   file { '/root/.bashrc':
     ensure => 'file',
