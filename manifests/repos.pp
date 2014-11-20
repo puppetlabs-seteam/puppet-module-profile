@@ -5,7 +5,7 @@ class profile::repos (
 ) {
   include stdlib::stages
 
-  case "$::osfamily $::os_maj_version" {
+  case "$::osfamily $::operatingsystemmajrelease" {
     "RedHat 6": {
       class { '::profile::se_repo':
       stage => 'setup',
