@@ -1,4 +1,4 @@
-class profile::el6_repo {
+class profile::se_repo {
   yumrepo { 'se-repo':
     baseurl  => "http://${::servername}/rpms",
     descr    => 'SE Cached Files',
