@@ -1,7 +1,6 @@
 class profile::windows::baseline {
 
   require registry
-  include win_rdp
   
   reboot { 'before install':
     when => pending,
