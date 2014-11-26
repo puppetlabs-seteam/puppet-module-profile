@@ -1,31 +1,40 @@
 class profile::app::jenkins (
   $version = 'latest',
-  $ensure  = undef,
-  $package = undef,
+  $tomcat_major_version = '7',
+  $catalina_base = "/opt/apache-tomcat",
+  $catalina_home = "${catalina_base}",
 ) {
-  include profile::tomcat
   include profile::staging
-
-  $version_string = $version ? {
-    undef    => '-unspecified',
-    'latest' => '-unspecified',
-    default  => "-${version}",
+  class { 'java':
+    distribution => 'jre'
   }
-
-  # This directory is used by the Jenkins app, and should exist
-  file { "${tomcat::params::user_homedir}/.jenkins":
-    ensure => directory,
-    owner  => $tomcat::params::user,
-    group  => $tomcat::params::group,
-    mode   => '0750',
-    before => Tomcat::War['jenkins'],
+  class { 'profile::tomcat':
+    version       => $tomcat_major_version,
+    catalina_base => $catalina_base,
+    catalina_home => $catalina_home,
+    instance_name => 'jenkins',
+  }->
+  tomcat::setenv::entry { 'JENKINS_HOME':
+    value => "\"-DJENKINS_HOME=${catalina_base}/webapps/jenkins\"",
+    param => 'CATALINA_OPTS',
+    before => Tomcat::War [ "jenkins-${version}.war" ],
+    notify => Tomcat::War [ "jenkins-${version}.war" ],
   }
-
-  # The Jenkins app should be deployed
-  tomcat::war { 'jenkins':
-    ensure  => $ensure,
-    warfile => "jenkins${version_string}.war",
-    source  => "http://${::servername}/war/${version}/jenkins.war",
+  tomcat::war { "jenkins-${version}.war" :
+    war_source => "http://master.inf.puppetlabs.demo/war/${version}/jenkins.war",
+    catalina_base => "${catalina_base}",
+    before => File [ "${catalina_base}/webapps/jenkins" ],
+    notify => File [ "${catalina_base}/webapps/jenkins" ],
   }
-
+  file { "${catalina_base}/webapps/jenkins":
+    ensure => 'link',
+    target => "${catalina_base}/webapps/jenkins-${version}",
+  }
+  tomcat::service { "jenkins":
+    catalina_base => "${catalina_base}",
+    catalina_home => "${catalina_home}",
+    service_name => "jenkins",
+    subscribe => File [ "${catalina_base}/webapps/jenkins" ],
+  }
 }
+
