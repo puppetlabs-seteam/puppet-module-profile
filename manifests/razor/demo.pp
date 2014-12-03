@@ -1,35 +1,35 @@
-class puppet-module-profile::razor::demo {
+class profile::razor::demo {
 
   if $razor_content_installed != 'true' {
 
     file { '/tmp/pe-broker.json':
       ensure => present,
-      source => 'puppet:///modules/puppet-module-profile/razordemo/pe-broker.json',
+      source => 'puppet:///modules/profile/razordemo/pe-broker.json',
     }
 
     file { '/tmp/centos-6.5-repo.json':
       ensure => present,
-      source => 'puppet:///modules/puppet-module-profile/razordemo/centos-6.5-repo.json',
+      source => 'puppet:///modules/profile/razordemo/centos-6.5-repo.json',
     }
 
     file { '/tmp/small-tag.json':
       ensure => present,
-      source => 'puppet:///modules/puppet-module-profile/razordemo/small-tag.json',
+      source => 'puppet:///modules/profile/razordemo/small-tag.json',
     }
 
     file { '/tmp/large-tag.json':
       ensure => present,
-      source => 'puppet:///modules/puppet-module-profile/razordemo/large-tag.json',
+      source => 'puppet:///modules/profile/razordemo/large-tag.json',
     }
 
     file { '/tmp/policy-small.json':
       ensure => present,
-      source => 'puppet:///modules/puppet-module-profile/razordemo/policy-small.json',
+      source => 'puppet:///modules/profile/razordemo/policy-small.json',
     }
 
     file { '/tmp/policy-large.json':
       ensure => present,
-      source => 'puppet:///modules/puppet-module-profile/razordemo/policy-large.json',
+      source => 'puppet:///modules/profile/razordemo/policy-large.json',
     }
 
     exec { 'Install Repo':
@@ -81,7 +81,7 @@ class puppet-module-profile::razor::demo {
     file { '/etc/puppetlabs/facter/facts.d/razor_content_installed.sh':
       ensure => present,
       mode => 0755,
-      source => 'puppet:///modules/puppet-module-profile/razordemo/razor_content_installed.sh',
+      source => 'puppet:///modules/profile/razordemo/razor_content_installed.sh',
     }
 
   }
