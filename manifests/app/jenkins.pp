@@ -7,10 +7,11 @@ class profile::app::jenkins (
   include java
   include profile::tomcat
   tomcat::setenv::entry { 'JENKINS_HOME':
-    value  => "\"-DJENKINS_HOME=${catalina_base}/webapps/jenkins\"",
-    param  => 'CATALINA_OPTS',
-    before => Tomcat::War [ "jenkins-${version}.war" ],
-    notify => Tomcat::War [ "jenkins-${version}.war" ],
+    value   => "\"-DJENKINS_HOME=${catalina_base}/webapps/jenkins\"",
+    param   => 'CATALINA_OPTS',
+    before  => Tomcat::War [ "jenkins-${version}.war" ],
+    notify  => Tomcat::War [ "jenkins-${version}.war" ],
+    require => Class [ 'profile::tomcat' ],
   }
   tomcat::war { "jenkins-${version}.war" :
     war_source    => "http://master.inf.puppetlabs.demo/war/${version}/jenkins.war",
