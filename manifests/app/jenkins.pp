@@ -1,7 +1,7 @@
 class profile::app::jenkins (
   $version = 'latest',
   $catalina_base = "/opt/apache-tomcat",
-  $catalina_home = "${catalina_base}",
+  $catalina_home = "/opt/apache-tomcat",
 ) {
   include profile::staging
   include java
@@ -9,15 +9,15 @@ class profile::app::jenkins (
   tomcat::setenv::entry { 'JENKINS_HOME':
     value   => "\"-DJENKINS_HOME=${catalina_base}/webapps/jenkins\"",
     param   => 'CATALINA_OPTS',
-    before  => Tomcat::War [ "jenkins-${version}.war" ],
-    notify  => Tomcat::War [ "jenkins-${version}.war" ],
-    require => Class [ 'profile::tomcat' ],
+    before  => Tomcat::War["jenkins-${version}.war"],
+    notify  => Tomcat::War["jenkins-${version}.war"],
+    require => Class['profile::tomcat'],
   }
   tomcat::war { "jenkins-${version}.war" :
     war_source    => "http://master.inf.puppetlabs.demo/war/${version}/jenkins.war",
     catalina_base => "${catalina_base}",
-    before        => File [ "${catalina_base}/webapps/jenkins" ],
-    notify        => File [ "${catalina_base}/webapps/jenkins" ],
+    before        => File["${catalina_base}/webapps/jenkins"],
+    notify        => File["${catalina_base}/webapps/jenkins"],
   }
   file { "${catalina_base}/webapps/jenkins":
     ensure => 'link',
@@ -27,7 +27,7 @@ class profile::app::jenkins (
     catalina_base => "${catalina_base}",
     catalina_home => "${catalina_home}",
     service_name  => "jenkins",
-    subscribe     => File [ "${catalina_base}/webapps/jenkins" ],
+    subscribe     => File["${catalina_base}/webapps/jenkins"],
   }
 }
 
