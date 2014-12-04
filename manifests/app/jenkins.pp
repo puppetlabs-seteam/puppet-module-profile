@@ -1,7 +1,8 @@
+#Profile to install jenkins app on top of standard tomcat install
 class profile::app::jenkins (
   $version = 'latest',
-  $catalina_base = "/opt/apache-tomcat",
-  $catalina_home = "/opt/apache-tomcat",
+  $catalina_base = '/opt/apache-tomcat',
+  $catalina_home = '/opt/apache-tomcat',
 ) {
   include profile::staging
   include java
@@ -15,7 +16,7 @@ class profile::app::jenkins (
   }
   tomcat::war { "jenkins-${version}.war" :
     war_source    => "http://master.inf.puppetlabs.demo/war/${version}/jenkins.war",
-    catalina_base => "${catalina_base}",
+    catalina_base => $catalina_base,
     before        => File["${catalina_base}/webapps/jenkins"],
     notify        => File["${catalina_base}/webapps/jenkins"],
   }
@@ -23,10 +24,10 @@ class profile::app::jenkins (
     ensure => 'link',
     target => "${catalina_base}/webapps/jenkins-${version}",
   }
-  tomcat::service { "jenkins":
-    catalina_base => "${catalina_base}",
-    catalina_home => "${catalina_home}",
-    service_name  => "jenkins",
+  tomcat::service { 'jenkin':
+    catalina_base => $catalina_base,
+    catalina_home => $catalina_home,
+    service_name  => 'jenkins',
     subscribe     => File["${catalina_base}/webapps/jenkins"],
   }
 }
