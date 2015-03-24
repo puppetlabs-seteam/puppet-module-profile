@@ -49,6 +49,7 @@ class profile::windows::iis {
   exec { 'register_net_with_iis':
     command     => 'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\aspnet_regiis.exe -i',
     refreshonly => true,
+    subscribe   => Package['Microsoft .NET Framework 4 Extended'],
   }
  
   iis::manage_site { 'Default Web Site':

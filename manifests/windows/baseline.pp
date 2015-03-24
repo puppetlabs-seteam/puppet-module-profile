@@ -14,10 +14,6 @@ class profile::windows::baseline {
     require => Class['chocolatey'],
   }
 
-  class { 'pe_windows_shortcuts':
-    user => 'vagrant',
-  }
-
   package { 'Firefox': }
 
   package { 'notepadplusplus': }
