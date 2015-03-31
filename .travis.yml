@@ -1,15 +1,15 @@
---- 
-language: ruby
-script: 
-- git clone -q git://github.com/puppetlabs/ghpublisher.git .forge-releng
-- .forge-releng/publish
-env: 
-  global: 
-  - PUBLISHER_LOGIN=seteam
-  - secure: |-
-      Rar+QrvDtfLuIWdj3oa4DNoIltgZ/Qo0MH3eeTKxUKvSNWGG4vefcxZrpdOh
-      qz8xLAlUOKa021Cmk0MgkW4Hkvu54O4N/kquD6+JOd+VlviYJGQky+NQL+2T
-      akXqZBZthsOqz5bhqc9cA44XeajUf3hasB59W+uI0Df/kVTkePw=
-branches: 
-  only: 
-  - master
+---
+
+# We're currently only using Travis CI for automatic Forge deployment. No real
+# test is run. This is specified here in order to override the default test.
+script: /bin/true
+
+deploy:
+  provider: puppetforge
+  user: seteam
+  password:
+    secure: "CM9t1lujuA3vtAsGgWf3XQMfIpx4VAYZgFoO/u9J+3ZaaECHm6OR1qlgOr1z4Vv46LXZ4HqbbBVHd2bISp+pkW3bjMOp7KkV5aS8X9+WdNJ7u5uhCiAQoLSUb67uoLdsyUGqUHtKj1OJw1FZzte/o2Vum77Sjwguypi/yYtEFn8="
+  on:
+    tags: true
+    # all_branches is required to use tags
+    all_branches: true
