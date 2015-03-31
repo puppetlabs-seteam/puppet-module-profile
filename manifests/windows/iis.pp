@@ -1,4 +1,5 @@
 class profile::windows::iis {
+  include ::dotnet
 
   Dism {
     ensure => present,
