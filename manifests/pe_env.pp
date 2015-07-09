@@ -14,4 +14,17 @@ class profile::pe_env {
     require => File['/root/.bashrc'],
   }
 
+  @@host { $fqdn:
+    ensure       => 'present',
+    host_aliases => [ $clientcert, $fqdn, $hostname ],
+    ipaddress    => $ipaddress_eth1,
+    tag          => 'seteam-demo-environment'
+  }
+
+  Host <<| tag=seteam-demo-environment |>>
+
+  resources { 'host':
+    purge => 'true',
+  }
+
 }
