@@ -3,6 +3,7 @@
 # We're currently only using Travis CI for automatic Forge deployment. No real
 # test is run. This is specified here in order to override the default test.
 script: /bin/true
+sudo:   false
 
 deploy:
   provider: puppetforge
