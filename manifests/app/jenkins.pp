@@ -1,31 +1,34 @@
+#Profile to install jenkins app on top of standard tomcat install
 class profile::app::jenkins (
   $version = 'latest',
-  $ensure  = undef,
-  $package = undef,
+  $catalina_base = '/opt/apache-tomcat',
+  $catalina_home = '/opt/apache-tomcat',
 ) {
-  include profile::tomcat
   include profile::staging
-
-  $version_string = $version ? {
-    undef    => '-unspecified',
-    'latest' => '-unspecified',
-    default  => "-${version}",
+  include java
+  include profile::tomcat
+  tomcat::setenv::entry { 'JENKINS_HOME':
+    value   => "\"-DJENKINS_HOME=${catalina_base}/webapps/jenkins\"",
+    param   => 'CATALINA_OPTS',
+    before  => Tomcat::War["jenkins-${version}.war"],
+    notify  => Tomcat::War["jenkins-${version}.war"],
+    require => Class['profile::tomcat'],
   }
-
-  # This directory is used by the Jenkins app, and should exist
-  file { "${tomcat::params::user_homedir}/.jenkins":
-    ensure => directory,
-    owner  => $tomcat::params::user,
-    group  => $tomcat::params::group,
-    mode   => '0750',
-    before => Tomcat::War['jenkins'],
+  tomcat::war { "jenkins-${version}.war" :
+    war_source    => "http://master.inf.puppetlabs.demo/war/${version}/jenkins.war",
+    catalina_base => $catalina_base,
+    before        => File["${catalina_base}/webapps/jenkins"],
+    notify        => File["${catalina_base}/webapps/jenkins"],
   }
-
-  # The Jenkins app should be deployed
-  tomcat::war { 'jenkins':
-    ensure  => $ensure,
-    warfile => "jenkins${version_string}.war",
-    source  => "http://${::servername}/war/${version}/jenkins.war",
+  file { "${catalina_base}/webapps/jenkins":
+    ensure => 'link',
+    target => "${catalina_base}/webapps/jenkins-${version}",
   }
-
+  tomcat::service { 'jenkin':
+    catalina_base => $catalina_base,
+    catalina_home => $catalina_home,
+    service_name  => 'jenkins',
+    subscribe     => File["${catalina_base}/webapps/jenkins"],
+  }
 }
+
