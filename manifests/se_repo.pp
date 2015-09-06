@@ -1,6 +1,9 @@
 class profile::se_repo {
+
+  $repo = "${::osfamily}-${::operatingsystemmajrelease}-${::architecture}"
+
   yumrepo { 'se-repo':
-    baseurl  => "http://${::servername}/rpms",
+    baseurl  => "http://${::servername}/yumrepo/${repo}",
     descr    => 'SE Cached Files',
     enabled  => 1,
     gpgcheck => 1,
