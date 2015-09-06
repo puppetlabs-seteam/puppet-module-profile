@@ -1,0 +1,5 @@
+{
+  "name": "centos-6.5",
+  "iso-url": "http://mirrors.usc.edu/pub/linux/distributions/centos/6.4/isos/x86_64/CentOS-6.4-x86_64-minimal.iso",
+  "task": "centos"
+}

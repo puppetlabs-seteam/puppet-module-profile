@@ -1,0 +1,7 @@
+{
+  "name": "puppet-pe",
+  "broker-type": "puppet-pe",
+  "configuration": {
+    "server": "puppet-master"
+  }
+}
